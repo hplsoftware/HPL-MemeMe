@@ -14,6 +14,7 @@
 		9DBB962D1DA9A63700276552 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DBB962B1DA9A63700276552 /* LaunchScreen.storyboard */; };
 		9DBB96381DA9A63700276552 /* HPL_MemeMeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DBB96371DA9A63700276552 /* HPL_MemeMeTests.swift */; };
 		9DBB96431DA9A63700276552 /* HPL_MemeMeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DBB96421DA9A63700276552 /* HPL_MemeMeUITests.swift */; };
+		9DBB96521DA9A67800276552 /* ImageViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DBB96511DA9A67800276552 /* ImageViewControllerDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		9DBB963E1DA9A63700276552 /* HPL-MemeMeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "HPL-MemeMeUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DBB96421DA9A63700276552 /* HPL_MemeMeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPL_MemeMeUITests.swift; sourceTree = "<group>"; };
 		9DBB96441DA9A63700276552 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9DBB96511DA9A67800276552 /* ImageViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewControllerDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 		9DBB96211DA9A63700276552 /* HPL-MemeMe */ = {
 			isa = PBXGroup;
 			children = (
+				9DBB96501DA9A65900276552 /* delegates */,
 				9DBB96221DA9A63700276552 /* AppDelegate.swift */,
 				9DBB96241DA9A63700276552 /* ViewController.swift */,
 				9DBB96261DA9A63700276552 /* Main.storyboard */,
@@ -123,6 +126,14 @@
 				9DBB96441DA9A63700276552 /* Info.plist */,
 			);
 			path = "HPL-MemeMeUITests";
+			sourceTree = "<group>";
+		};
+		9DBB96501DA9A65900276552 /* delegates */ = {
+			isa = PBXGroup;
+			children = (
+				9DBB96511DA9A67800276552 /* ImageViewControllerDelegate.swift */,
+			);
+			name = delegates;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DBB96251DA9A63700276552 /* ViewController.swift in Sources */,
+				9DBB96521DA9A67800276552 /* ImageViewControllerDelegate.swift in Sources */,
 				9DBB96231DA9A63700276552 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

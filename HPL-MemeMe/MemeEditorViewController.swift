@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MemeEditorViewController.swift
 //  HPL-MemeMe
 //
 //  Created by Rob Sutherland on 2016-10-08.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController,UIImagePickerControllerDelegate,
+class MemeEditorViewController: UIViewController,UIImagePickerControllerDelegate,
 UINavigationControllerDelegate,UITextFieldDelegate {
     
     @IBOutlet var imagePickerView: UIImageView!
@@ -45,21 +45,21 @@ UINavigationControllerDelegate,UITextFieldDelegate {
         
         self.subscribeToKeyboardNotifications()
         
-        textBoxTop.defaultTextAttributes = memeTextAttributes
-        textBoxBottom.defaultTextAttributes = memeTextAttributes
-        
-        textBoxTop.textAlignment = NSTextAlignment.center
-        textBoxBottom.textAlignment = NSTextAlignment.center
-        
-        textBoxTop.delegate = textBoxViewControllerDelegate
-        textBoxBottom.delegate = textBoxViewControllerDelegate
+        setupTextFieldParams(textField: textBoxTop)
+        setupTextFieldParams(textField: textBoxBottom)
         
         if(imagePickerView.image == nil){
           activityButton.isEnabled = false
         }else{
             activityButton.isEnabled = true
         }
+    }
+    
+    func setupTextFieldParams(textField: UITextField){
         
+        textField.defaultTextAttributes = memeTextAttributes
+        textField.delegate = textBoxViewControllerDelegate
+        textField.textAlignment = NSTextAlignment.center
         
     }
     
@@ -69,22 +69,18 @@ UINavigationControllerDelegate,UITextFieldDelegate {
     }
     
     @IBAction func pickAnImageFromAlbum(_ sender: AnyObject) {
-        
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-        self.present(imagePicker, animated: true, completion: nil)
-        
+       setupImagePickerInstance(imagePickerControllerSourceType: UIImagePickerControllerSourceType.photoLibrary)
     }
     
-    
     @IBAction func pickAnImageFromCamera(_ sender: AnyObject) {
-        
+        setupImagePickerInstance(imagePickerControllerSourceType: UIImagePickerControllerSourceType.camera)
+    }
+    
+    func setupImagePickerInstance(imagePickerControllerSourceType: UIImagePickerControllerSourceType){
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+        imagePicker.sourceType = imagePickerControllerSourceType
         self.present(imagePicker, animated: true, completion: nil)
-        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -100,8 +96,6 @@ UINavigationControllerDelegate,UITextFieldDelegate {
            activityButton.isEnabled = false
         }
     }
-    
-   
     
     func keyboardWillShow(notification: NSNotification) {
         if textBoxBottom.isFirstResponder {
@@ -139,23 +133,19 @@ UINavigationControllerDelegate,UITextFieldDelegate {
         NotificationCenter.default.removeObserver(self,
                                                   name: NSNotification.Name.UIKeyboardWillHide,
                                                   object: nil)
-        
     }
     
     func saveMemeObject() {
         
-        //create the memed image
-        memedImage = generateMemedImage()
-        
-        //Create the meme object
+        //save the meme object
         _ = MemeObject( upperString: textBoxTop.text!,lowerString: textBoxBottom.text!, memeImage: memedImage, origImage:imagePickerView.image)
         
     }
     
     @IBAction func openShareActivityAction(_ sender: AnyObject) {
         
-        //save the mem object
-        saveMemeObject()
+        //create the memed image
+        memedImage = generateMemedImage()
         
         //open the activity controller and pass in the saved meme object
         let controller = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
@@ -166,6 +156,9 @@ UINavigationControllerDelegate,UITextFieldDelegate {
             
             if success{
             
+                //save the mem object
+                self.saveMemeObject()
+                
                 //clear the meme editor
                 self.clearMemeArea()
                 
@@ -201,7 +194,6 @@ UINavigationControllerDelegate,UITextFieldDelegate {
     
     func generateMemedImage() -> UIImage {
         
-        // TODO: Hide toolbar and navbar
         navigationBar.isHidden = true
         sourceImageToolBar.isHidden = true
         
@@ -211,7 +203,6 @@ UINavigationControllerDelegate,UITextFieldDelegate {
         let memedImage : UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
-        // TODO:  Show toolbar and navbar       
         navigationBar.isHidden = false
         sourceImageToolBar.isHidden = false
         

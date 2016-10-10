@@ -36,10 +36,10 @@ UINavigationControllerDelegate,UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)
         imagePickerView.contentMode = UIViewContentMode.scaleAspectFit
         
@@ -54,13 +54,13 @@ UINavigationControllerDelegate,UITextFieldDelegate {
         textBoxTop.delegate = textBoxViewControllerDelegate
         textBoxBottom.delegate = textBoxViewControllerDelegate
         
-//        if(imagePickerView.image != nil){
-//            activityButton.isEnabled = true
-//        }else{
-//            activityButton.isEnabled = false
-//        }
+        if(imagePickerView.image == nil){
+          activityButton.isEnabled = false
+        }else{
+            activityButton.isEnabled = true
+        }
         
-        //clearMemeArea()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -79,10 +79,12 @@ UINavigationControllerDelegate,UITextFieldDelegate {
     
     
     @IBAction func pickAnImageFromCamera(_ sender: AnyObject) {
+        
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = UIImagePickerControllerSourceType.camera
         self.present(imagePicker, animated: true, completion: nil)
+        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -91,12 +93,12 @@ UINavigationControllerDelegate,UITextFieldDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            
             imagePickerView.image = image
             self.dismiss(animated: true, completion: nil)
-            
+            activityButton.isEnabled = true
+        }else{
+           activityButton.isEnabled = false
         }
-        activityButton.isEnabled = true
     }
     
    
@@ -152,22 +154,39 @@ UINavigationControllerDelegate,UITextFieldDelegate {
     
     @IBAction func openShareActivityAction(_ sender: AnyObject) {
         
+        //save the mem object
         saveMemeObject()
         
+        //open the activity controller and pass in the saved meme object
         let controller = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
         
-        controller.completionHandler = {(activityType, completed:Bool) in
-            if !completed {
-                //cancelled
-                return
+        //setup the completion handler for the activity view
+        controller.completionWithItemsHandler = {
+            (activity, success, items, error) in
+            
+            if success{
+            
+                //clear the meme editor
+                self.clearMemeArea()
+                
+                //dismiss the activity controller
+                self.dismiss(animated: true, completion: nil)
+                
+                //setup alert controller
+                let alertController = UIAlertController(title: "Success", message: "Successfully Saved Meme!!", preferredStyle: .alert)
+                
+                //present the alert to the user in the center of the screen
+                self.present(alertController, animated: true, completion: nil)
+                
+                //get rid of the alert after 2 seconds
+                let when = DispatchTime.now() + 2
+                DispatchQueue.main.asyncAfter(deadline: when){
+                    alertController.dismiss(animated: true, completion: nil)
+                }
             }
-            
-            //shared successfully
-            
-           self.clearMemeArea()
-            self.dismiss(animated: true, completion: nil)
         }
         
+        //present the activity controller
         self.present(controller, animated: true, completion: nil)
 
     }

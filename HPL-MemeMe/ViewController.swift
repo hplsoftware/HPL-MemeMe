@@ -16,12 +16,20 @@ UINavigationControllerDelegate,UITextFieldDelegate {
     @IBOutlet var textBoxTop: UITextField!
     @IBOutlet var textBoxBottom: UITextField!
     @IBOutlet var cameraButton: UIBarButtonItem!
+    @IBOutlet var albumButton: UIBarButtonItem!
+    @IBOutlet var cancelButton: UIBarButtonItem!
+    @IBOutlet var navigationBar: UINavigationBar!
+    @IBOutlet var sourceImageToolBar: UIToolbar!
+    @IBOutlet var activityButton: UIBarButtonItem!
+    
+    var memedImage: UIImage!
     
     let memeTextAttributes = [
         NSStrokeColorAttributeName : UIColor.black,
         NSForegroundColorAttributeName : UIColor.white,
+        NSBackgroundColorAttributeName: UIColor.clear,
         NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 36)!,
-        NSStrokeWidthAttributeName : 0.5
+        NSStrokeWidthAttributeName : -3.0
         ] as [String : Any]
     
     let textBoxViewControllerDelegate = TextBoxViewControllerDelegate()
@@ -40,8 +48,19 @@ UINavigationControllerDelegate,UITextFieldDelegate {
         textBoxTop.defaultTextAttributes = memeTextAttributes
         textBoxBottom.defaultTextAttributes = memeTextAttributes
         
+        textBoxTop.textAlignment = NSTextAlignment.center
+        textBoxBottom.textAlignment = NSTextAlignment.center
+        
         textBoxTop.delegate = textBoxViewControllerDelegate
         textBoxBottom.delegate = textBoxViewControllerDelegate
+        
+//        if(imagePickerView.image != nil){
+//            activityButton.isEnabled = true
+//        }else{
+//            activityButton.isEnabled = false
+//        }
+        
+        //clearMemeArea()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -49,7 +68,7 @@ UINavigationControllerDelegate,UITextFieldDelegate {
         unsubscribeFromKeyboardNotifications()
     }
     
-    @IBAction func pickAnImage(_ sender: AnyObject) {
+    @IBAction func pickAnImageFromAlbum(_ sender: AnyObject) {
         
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
@@ -59,7 +78,7 @@ UINavigationControllerDelegate,UITextFieldDelegate {
     }
     
     
-    @IBAction func pickAnImageFromCamera2(_ sender: AnyObject) {
+    @IBAction func pickAnImageFromCamera(_ sender: AnyObject) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = UIImagePickerControllerSourceType.camera
@@ -72,9 +91,12 @@ UINavigationControllerDelegate,UITextFieldDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            
             imagePickerView.image = image
             self.dismiss(animated: true, completion: nil)
+            
         }
+        activityButton.isEnabled = true
     }
     
    
@@ -117,6 +139,67 @@ UINavigationControllerDelegate,UITextFieldDelegate {
                                                   object: nil)
         
     }
+    
+    func saveMemeObject() {
+        
+        //create the memed image
+        memedImage = generateMemedImage()
+        
+        //Create the meme object
+        _ = MemeObject( upperString: textBoxTop.text!,lowerString: textBoxBottom.text!, memeImage: memedImage, origImage:imagePickerView.image)
+        
+    }
+    
+    @IBAction func openShareActivityAction(_ sender: AnyObject) {
+        
+        saveMemeObject()
+        
+        let controller = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
+        
+        controller.completionHandler = {(activityType, completed:Bool) in
+            if !completed {
+                //cancelled
+                return
+            }
+            
+            //shared successfully
+            
+           self.clearMemeArea()
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        self.present(controller, animated: true, completion: nil)
+
+    }
+    
+    @IBAction func clearMemeArea(){
+        
+        textBoxTop.text = "TOP"
+        textBoxBottom.text = "BOTTOM"
+        imagePickerView.image = nil
+        activityButton.isEnabled = false
+    }
+    
+    func generateMemedImage() -> UIImage {
+        
+        // TODO: Hide toolbar and navbar
+        navigationBar.isHidden = true
+        sourceImageToolBar.isHidden = true
+        
+        // Render view to an image
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        view.drawHierarchy(in: self.view.frame,afterScreenUpdates: true)
+        let memedImage : UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        // TODO:  Show toolbar and navbar       
+        navigationBar.isHidden = false
+        sourceImageToolBar.isHidden = false
+        
+        return memedImage
+    }
+    
+    
 
 }
 

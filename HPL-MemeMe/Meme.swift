@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 struct MemeObject {
+    
     var upperString: String!
     var lowerString: String!
     var memeImage: UIImage!

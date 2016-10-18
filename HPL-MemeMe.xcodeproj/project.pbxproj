@@ -16,6 +16,10 @@
 		9DBB96431DA9A63700276552 /* HPL_MemeMeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DBB96421DA9A63700276552 /* HPL_MemeMeUITests.swift */; };
 		9DBB96541DA9AE8400276552 /* TextBoxViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DBB96531DA9AE8400276552 /* TextBoxViewControllerDelegate.swift */; };
 		9DBB96571DA9B1BA00276552 /* Meme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DBB96561DA9B1BA00276552 /* Meme.swift */; };
+		9DBB96971DB45B2000276552 /* MemeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DBB96961DB45B2000276552 /* MemeCollectionViewCell.swift */; };
+		9DBB96991DB45D9700276552 /* MemeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DBB96981DB45D9700276552 /* MemeCollectionViewController.swift */; };
+		9DBB969B1DB5991600276552 /* MemeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DBB969A1DB5991600276552 /* MemeTableViewController.swift */; };
+		9DBB969D1DB59E3400276552 /* MemeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DBB969C1DB59E3400276552 /* MemeDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +55,10 @@
 		9DBB96441DA9A63700276552 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9DBB96531DA9AE8400276552 /* TextBoxViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextBoxViewControllerDelegate.swift; sourceTree = "<group>"; };
 		9DBB96561DA9B1BA00276552 /* Meme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meme.swift; sourceTree = "<group>"; };
+		9DBB96961DB45B2000276552 /* MemeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeCollectionViewCell.swift; sourceTree = "<group>"; };
+		9DBB96981DB45D9700276552 /* MemeCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeCollectionViewController.swift; sourceTree = "<group>"; };
+		9DBB969A1DB5991600276552 /* MemeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeTableViewController.swift; sourceTree = "<group>"; };
+		9DBB969C1DB59E3400276552 /* MemeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +117,10 @@
 				9DBB96291DA9A63700276552 /* Assets.xcassets */,
 				9DBB962B1DA9A63700276552 /* LaunchScreen.storyboard */,
 				9DBB962E1DA9A63700276552 /* Info.plist */,
+				9DBB96961DB45B2000276552 /* MemeCollectionViewCell.swift */,
+				9DBB96981DB45D9700276552 /* MemeCollectionViewController.swift */,
+				9DBB969A1DB5991600276552 /* MemeTableViewController.swift */,
+				9DBB969C1DB59E3400276552 /* MemeDetailViewController.swift */,
 			);
 			path = "HPL-MemeMe";
 			sourceTree = "<group>";
@@ -284,10 +296,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DBB96971DB45B2000276552 /* MemeCollectionViewCell.swift in Sources */,
+				9DBB969B1DB5991600276552 /* MemeTableViewController.swift in Sources */,
 				9DBB96251DA9A63700276552 /* MemeEditorViewController.swift in Sources */,
 				9DBB96541DA9AE8400276552 /* TextBoxViewControllerDelegate.swift in Sources */,
 				9DBB96231DA9A63700276552 /* AppDelegate.swift in Sources */,
+				9DBB96991DB45D9700276552 /* MemeCollectionViewController.swift in Sources */,
 				9DBB96571DA9B1BA00276552 /* Meme.swift in Sources */,
+				9DBB969D1DB59E3400276552 /* MemeDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,6 +552,7 @@
 				9DBB96491DA9A63700276552 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9DBB964A1DA9A63700276552 /* Build configuration list for PBXNativeTarget "HPL-MemeMeTests" */ = {
 			isa = XCConfigurationList;
@@ -544,6 +561,7 @@
 				9DBB964C1DA9A63700276552 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9DBB964D1DA9A63700276552 /* Build configuration list for PBXNativeTarget "HPL-MemeMeUITests" */ = {
 			isa = XCConfigurationList;
@@ -552,6 +570,7 @@
 				9DBB964F1DA9A63700276552 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

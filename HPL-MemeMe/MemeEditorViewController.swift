@@ -11,6 +11,8 @@ import UIKit
 class MemeEditorViewController: UIViewController,UIImagePickerControllerDelegate,
 UINavigationControllerDelegate,UITextFieldDelegate {
     
+    var meme: MemeObject!
+    
     @IBOutlet var imagePickerView: UIImageView!
     
     @IBOutlet var textBoxTop: UITextField!
@@ -138,7 +140,14 @@ UINavigationControllerDelegate,UITextFieldDelegate {
     func saveMemeObject() {
         
         //save the meme object
-        _ = MemeObject( upperString: textBoxTop.text!,lowerString: textBoxBottom.text!, memeImage: memedImage, origImage:imagePickerView.image)
+        let meme = MemeObject( upperString: textBoxTop.text!,lowerString: textBoxBottom.text!, memeImage: memedImage, origImage:imagePickerView.image)
+        
+        // Add it to the memes array in the Application Delegate
+        let object = UIApplication.shared.delegate
+        let appDelegate = object as! AppDelegate
+        appDelegate.memes.append(meme)
+        
+        print("Count of memes is \(appDelegate.memes.count)")
         
     }
     
@@ -185,7 +194,6 @@ UINavigationControllerDelegate,UITextFieldDelegate {
     }
     
     @IBAction func clearMemeArea(){
-        
         textBoxTop.text = "TOP"
         textBoxBottom.text = "BOTTOM"
         imagePickerView.image = nil
@@ -208,8 +216,5 @@ UINavigationControllerDelegate,UITextFieldDelegate {
         
         return memedImage
     }
-    
-    
-
 }
 

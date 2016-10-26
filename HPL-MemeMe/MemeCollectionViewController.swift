@@ -22,7 +22,11 @@ class MemeCollectionViewController: UICollectionViewController {
         self.tabBarController?.tabBar.isHidden = false
         var meme = memes
         
+        // Provoke the table view data source protocol methods to be called when subesequent memes are added to the memes collection.
         self.collectionView?.reloadData()
+        
+        //show the taskbar to allow navigartion between table or collection view
+        self.tabBarController?.tabBar.isHidden = false
         
     }
     
@@ -32,11 +36,13 @@ class MemeCollectionViewController: UICollectionViewController {
         let space: CGFloat = 3.0
         let dimension = (self.view.frame.size.width - (2 * space)) / 3.0
         
+        //setup the flow layout parameters
         flowLayout.minimumInteritemSpacing = space
         flowLayout.minimumLineSpacing = space
         let size = CGSize(width: dimension, height: dimension)
         flowLayout.itemSize = size
         
+        //setup for data and delegate
         self.collectionView?.delegate = self
         self.collectionView?.dataSource = self
         
@@ -60,8 +66,7 @@ class MemeCollectionViewController: UICollectionViewController {
         let meme = self.memes[indexPath.item]
         
         //set the properties of the cell with the objects data
-//        cell.(meme.top, bottomString: meme.bottom)
-        let imageView = UIImageView(image: meme.origImage)
+        let imageView = UIImageView(image: meme.memeImage)
         cell.backgroundView = imageView
         
         //return it for use
@@ -70,11 +75,13 @@ class MemeCollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        //instantiate the detail controller
         let detailController = self.storyboard!.instantiateViewController(withIdentifier: "MemeDetailViewController") as! MemeDetailViewController
         
         //grab the instance at this index
         detailController.meme = self.memes[indexPath.row]
         
+        //push it onto the stack
         self.navigationController!.pushViewController(detailController, animated: true)
     }
 

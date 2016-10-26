@@ -9,7 +9,7 @@
 import UIKit
 
 class TextBoxViewControllerDelegate: UIViewController, UITextFieldDelegate {
-
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.text = ""
     }

@@ -22,6 +22,9 @@ class MemeTableViewController: UITableViewController {
         
         // Provoke the table view data source protocol methods to be called when subesequent memes are added to the memes collection.
         self.tableView?.reloadData()
+        
+        //show the taskbar to allow navigartion between table or collection view
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     override func viewDidLoad() {
@@ -37,20 +40,30 @@ class MemeTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        //instantiate the cell object
          let cell = tableView.dequeueReusableCell(withIdentifier: "MemeCell")!
+        
+        //grab the meme object at the currently selected cell
         let meme = self.memes[(indexPath as NSIndexPath).row]
 
+        //populate the cell with the meme data
         cell.textLabel?.text = "\(meme.upperString!) ... \(meme.lowerString!)"
+        cell.textLabel?.textAlignment=NSTextAlignment.right
         cell.imageView?.image = meme.memeImage
         
+        //return it for use
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+         //instantiate the detail controller
         let detailController = self.storyboard!.instantiateViewController(withIdentifier: "MemeDetailViewController") as! MemeDetailViewController
         
         //grab the instance at this index
         detailController.meme = self.memes[indexPath.row]
+        
+        //push it onto the stack
         self.navigationController!.pushViewController(detailController, animated: true)
     }
 

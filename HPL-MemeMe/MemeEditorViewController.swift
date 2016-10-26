@@ -38,6 +38,7 @@ UINavigationControllerDelegate,UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        imagePickerView.contentMode = UIViewContentMode.scaleAspectFit
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,17 +83,17 @@ UINavigationControllerDelegate,UITextFieldDelegate {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = imagePickerControllerSourceType
-        self.present(imagePicker, animated: true, completion: nil)
+        present(imagePicker, animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             imagePickerView.image = image
-            self.dismiss(animated: true, completion: nil)
+            dismiss(animated: true, completion: nil)
             activityButton.isEnabled = true
         }else{
            activityButton.isEnabled = false
@@ -114,7 +115,7 @@ UINavigationControllerDelegate,UITextFieldDelegate {
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
         let userInfo = notification.userInfo!
         let keyboardSize = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
-        return keyboardSize.cgRectValue.height
+        return keyboardSize.cgRectValue.height-20
     }
     
     func subscribeToKeyboardNotifications(){
@@ -198,6 +199,9 @@ UINavigationControllerDelegate,UITextFieldDelegate {
         textBoxBottom.text = "BOTTOM"
         imagePickerView.image = nil
         activityButton.isEnabled = false
+        
+        //send us back to the sent memes page
+        dismiss(animated: true, completion: nil)
     }
     
     func generateMemedImage() -> UIImage {

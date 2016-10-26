@@ -20,13 +20,12 @@ class MemeCollectionViewController: UICollectionViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
-        var meme = memes
         
         // Provoke the table view data source protocol methods to be called when subesequent memes are added to the memes collection.
-        self.collectionView?.reloadData()
+        collectionView?.reloadData()
         
         //show the taskbar to allow navigartion between table or collection view
-        self.tabBarController?.tabBar.isHidden = false
+        tabBarController?.tabBar.isHidden = false
         
     }
     
@@ -43,8 +42,8 @@ class MemeCollectionViewController: UICollectionViewController {
         flowLayout.itemSize = size
         
         //setup for data and delegate
-        self.collectionView?.delegate = self
-        self.collectionView?.dataSource = self
+        collectionView?.delegate = self
+        collectionView?.dataSource = self
         
     }
     
@@ -82,7 +81,7 @@ class MemeCollectionViewController: UICollectionViewController {
         detailController.meme = self.memes[indexPath.row]
         
         //push it onto the stack
-        self.navigationController!.pushViewController(detailController, animated: true)
+        navigationController!.pushViewController(detailController, animated: true)
     }
 
 }

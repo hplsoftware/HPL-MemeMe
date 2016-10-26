@@ -38,18 +38,18 @@ UINavigationControllerDelegate,UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         imagePickerView.contentMode = UIViewContentMode.scaleAspectFit
+        setupTextFieldParams(textField: textBoxTop)
+        setupTextFieldParams(textField: textBoxBottom)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)
-        imagePickerView.contentMode = UIViewContentMode.scaleAspectFit
         
         self.subscribeToKeyboardNotifications()
-        
-        setupTextFieldParams(textField: textBoxTop)
-        setupTextFieldParams(textField: textBoxBottom)
+       
         
         if(imagePickerView.image == nil){
           activityButton.isEnabled = false

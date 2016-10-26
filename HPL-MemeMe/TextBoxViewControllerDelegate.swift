@@ -11,7 +11,9 @@ import UIKit
 class TextBoxViewControllerDelegate: UIViewController, UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.text = ""
+        if textField.text == "TOP" || textField.text == "BOTTOM" {
+            textField.text = ""
+        }
     }
   
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
